@@ -7,6 +7,9 @@ const path = require("path")
 // Importar HANDLEBARS
 const { engine }  = require('express-handlebars')
 
+// Importar el methodOveerride
+const methodOverride = require('method-override');
+
 // Configuraciones 
 // Establecer el path de la carpeta views
 app.set('views',path.join(__dirname, 'views'))
@@ -43,7 +46,7 @@ app.set('views',path.join(__dirname, 'views'))
 // Sabemos que usamos un Middlewares cuando usamos use
 // SERVIDOR VA A TRABAJAR CON INFORMACION EN BASE A FORMULARIOS
 app.use(express.urlencoded({extended:false}))
-
+app.use(methodOverride('_method'))
 
 // Variables globales
 
@@ -63,6 +66,8 @@ app.use(require('./routers/index.routers.js'))
 // Archivos estáticos
 // Definir archivos estáticos y públicos
 app.use(express.static(path.join(__dirname,'public')))
+
+app.use(require('./routers/portafolio.routes'))
 
 // Exportar la variable app
 module.exports = app
