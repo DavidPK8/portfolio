@@ -1,6 +1,9 @@
 // Importar el modelo Usuario
 const User = require('../models/Users')
 
+// Importar Passport
+const passport = require("passport")
+
 // Mostrar el formulario de registro
 const renderRegisterForm =(req,res)=>{
     res.render('user/registerForm')
@@ -31,14 +34,21 @@ const registerNewUser = async(req,res)=>{
 const renderLoginForm =(req,res)=>{
     res.render('user/loginForm')
 }
+
 // Capturar los datos del formulario y almacenar en el BDD
-const loginUser =(req,res)=>{
-    res.send('login user')
-}
+const loginUser = passport.authenticate('local',{
+    failureRedirect:'/user/login',
+    successRedirect:'/portafolios'
+})
+
 // Cerrar Sesion del usuario
 const logoutUser =(req,res)=>{
-    res.send('logout user')
+    req.logout((err)=>{
+        if (err) return res.send("Ocurrio un error") 
+        res.redirect('/');
+    });
 }
+
 // Exportar los metodos
 module.exports={
     renderRegisterForm,

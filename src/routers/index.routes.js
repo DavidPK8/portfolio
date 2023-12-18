@@ -17,7 +17,5 @@ router.get('/login',(req,res)=>{
 
 router.get('/', renderIndex)
 
-router.get('/login', renderLogin)
-
 // Exportar la varaible router
 module.exports = router
