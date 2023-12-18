@@ -20,20 +20,29 @@ const createNewPortafolio =async (req,res)=>{
     const {title, category,description} = req.body
     const newPortfolio = new Portfolio({title,category,description})
     await newPortfolio.save()
-    res.json({newPortfolio})
+    res.redirect("/portafolios")
 }
 
 // METODO PARA ACTUALIZAR EL FORMULARIO
-const renderEditPortafolioForm = (req,res)=>{
-    res.send('Formulario para editar un portafolio')
+const renderEditPortafolioForm =async(req,res)=>{
+    // Consulta del portafolio en BDD con el ID
+    const portfolio = await Portfolio.findById(req.params.id).lean()
+    // Mandar a la vista
+    res.render('portafolio/editPortfolio',{portfolio})
 }
 // METODO PARA ACTUALIZAR EN LA BDD LO CAPTURADO EN EL FORM
-const updatePortafolio = (req,res)=>{
-    res.send('Editar un portafolio')
+const updatePortafolio = async(req,res)=>{
+    // Capturar los datos del body
+    const {title,category,description}= req.body
+    // Actualizar el portafolio en BDD
+    await Portfolio.findByIdAndUpdate(req.params.id,{title,category,description})
+    // Redireccionar
+    res.redirect('/portafolios')
 }
 // METODO PARA ELIMINAR EN LA BDD
-const deletePortafolio = (req,res)=>{
-    res.send('Eliminar un nuevo portafolio')
+const deletePortafolio = async(req,res)=>{
+    await Portfolio.findByIdAndDelete(req.params.id)
+    res.redirect('/portafolios')
 }
 
 // EXPORTACION COMMONJS NOMBRADA

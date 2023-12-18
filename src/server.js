@@ -63,11 +63,16 @@ app.get('/',(req,res)=>{
 */
 app.use(require('./routers/index.routers.js'))
 
+app.use(require('./routers/portafolio.routes'))
+
+app.use(require('./routers/user.routes'))
+
 // Archivos estáticos
 // Definir archivos estáticos y públicos
 app.use(express.static(path.join(__dirname,'public')))
 
-app.use(require('./routers/portafolio.routes'))
+
+
 
 // Exportar la variable app
 module.exports = app
