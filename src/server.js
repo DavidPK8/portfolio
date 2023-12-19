@@ -4,6 +4,7 @@ const { engine }  = require('express-handlebars')
 const methodOverride = require('method-override');
 const passport = require('passport');
 const session = require('express-session');
+const fileUpload = require('express-fileupload');
 
 // Inicializaciones
 const app = express()
@@ -13,6 +14,12 @@ require('./config/passport')
 app.set('port',process.env.port || 3000)
 app.set('views',path.join(__dirname, 'views'))
 app.set('views',path.join(__dirname, 'views'))
+
+app.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : './uploads'
+}));
+
 app.engine('.hbs',engine({
     defaultLayout:'main',
     layoutsDir: path.join(app.get('views'),'layouts'),
